@@ -1,0 +1,31 @@
+.title Timer Astabil cu LM741
+.include "./LM741.MOD"
+.include "./potentiometer.sub"
+.save all
+.probe alli
+
+VBT1 1 0 9V
+
+XU1 3 2 1 0 6 LM741/NS
+XU2 1 4 2 potentiometer PARAMS: Rtot=100K wiper={POT}
+.param POT .5
+
+R1 4 6 1k
+R2 6 3 47k
+R3 3 7 47k
+R4 1 7 4.7k
+R5 7 0 4.7k
+
+C1 2 0 100u
+C2 7 0 4.7u
+
+ROUT1 6 0 10K
+.param TES 10K
+#.dc lin vbt1 0.005 32 .01
+#.dc lin vbt1 1.75 12 .01
+#.dc lin vbt1 -120K 10k 10 ; for the giggle, run it
+.tran 45s
+#.step param POT list .01 .1 .2 .4 .5 .6 .8 .9 .99 ;multe valori
+#.step param POT list .1 .5 .9 ;valori relevante
+
+.end
